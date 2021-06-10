@@ -46,19 +46,20 @@ fi
 ######To create tar file of apache log files ###########
 cd /var/log/apache2/
 timestamp=$(date '+%d%m%Y-%H%M%S')
-find . -iname '*.log' -print0 | xargs -0 tar zcf shikhar-httpd-logs-$timestamp.tar
-echo "Tar file is created in /tmp/ and name of tar file is shikhar-httpd-logs-$timestamp.tar"
-echo "Contents of shikhar-httpd-logs-$timestamp.tar are as follows:"
+myname="shikhar"
+s3_bucket="upgrad-shikhar"
+find . -iname '*.log' -print0 | xargs -0 tar zcf $myname-httpd-logs-$timestamp.tar
+echo "Tar file is created in /tmp/ and name of tar file is $myname-httpd-logs-$timestamp.tar"
+echo "Contents of $myname-httpd-logs-$timestamp.tar are as follows:"
 tar -tvf shikhar-httpd-logs-$timestamp.tar
 
-mv shikhar-httpd-logs-$timestamp.tar /tmp/shikhar-httpd-logs-$timestamp.tar
+mv $myname-httpd-logs-$timestamp.tar /tmp/$myname-httpd-logs-$timestamp.tar
 cd /tmp/
-ls -lah | grep shikhar
+ls -lah | grep $myname
 
 ###Moving tar file to s3 bucket##### 
 aws s3 \
-cp /tmp/shikhar-httpd-logs-$timestamp.tar \
-s3://upgrad-shikhar/shikhar-httpd-logs-$timestamp.tar
+cp /tmp/$myname-httpd-logs-$timestamp.tar \
+s3://$s3_bucket/$myname-httpd-logs-$timestamp.tar
 
-##test git1
-##test git2
+
