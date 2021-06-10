@@ -5,7 +5,6 @@
 #sudo ./root/Automation_Project/automation.sh
 #chmod 777 automation.sh
 #####################################################
-## 5JAG5TDvQ5ZYZ3x
 ######To check if Apache2 is installed or not ###########
 isApacheInstalled=$(( `dpkg --get-selections | grep apache | wc -l` ))
 #echo $isApacheInstalled
