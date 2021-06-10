@@ -5,6 +5,7 @@
 #sudo ./root/Automation_Project/automation.sh
 #chmod 777 automation.sh
 #####################################################
+## 5JAG5TDvQ5ZYZ3x
 ######To check if Apache2 is installed or not ###########
 isApacheInstalled=$(( `dpkg --get-selections | grep apache | wc -l` ))
 #echo $isApacheInstalled
@@ -17,6 +18,16 @@ then
     sudo apt install apache2
 else
     echo "Apache already installed"
+fi
+
+isApacheRunning=$(( `sudo systemctl status apache2 | grep active | wc -l` ))
+if [ $isApacheRunning == 1 ]
+then
+    echo "Apache server is running"
+else
+    echo "Apache is server is not running"
+    sudo systemctl start apache2
+    sudo systemctl enable apache2
 fi
 
 ######To check if AWS CLI is installed or not ###########
