@@ -11,7 +11,7 @@ timestamp=$(date '+%d%m%Y-%H%M%S')
 myname="shikhar"
 s3_bucket="upgrad-shikhar"
 
-echo "-------------automation.sh--running on $timestamp------------" > $myname-automation-script-logs-$timestamp.log
+echo "-------------automation.sh--started running on $timestamp------------" > $myname-automation-script-logs-$timestamp.log
 
 
 isApacheInstalled=$(( `dpkg --get-selections | grep apache | wc -l` ))
@@ -72,4 +72,15 @@ aws s3 \
 cp /tmp/$myname-httpd-logs-$timestamp.tar \
 s3://$s3_bucket/$myname-httpd-logs-$timestamp.tar
 
+cd ~/Automation_Project/
+echo "Log tar moved to $s3_bucket on $timestamp"  >> $myname-automation-script-logs-$timestamp.log
 
+isCronPresent=$(( `cat /etc/cron.d/automation | wc -l` ))
+if [ $isCronPresent == 0 ]
+then
+    echo "10 12 * * * root /root/Automation_Project/automation.sh" > /etc/cron.d/automation
+    echo "10 12 * * * root /root/Automation_Project/automation.sh cron job created by script"  >> $myname-automation-script-logs-$timestamp.log
+else
+    echo "Cron job already exists" >> $myname-automation-script-logs-$timestamp.log
+fi
+echo "Script over!" >> $myname-automation-script-logs-$timestamp.log
