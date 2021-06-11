@@ -69,7 +69,7 @@ tar -tvf shikhar-httpd-logs-$timestamp.tar
 mv $myname-httpd-logs-$timestamp.tar /tmp/$myname-httpd-logs-$timestamp.tar
 cd /tmp/
 ls -lah | grep $myname
-Size=$(( `ls -l | grep $timestamp | awk '{print (( $5/1024 ))"K"}'`))
+Size=$(( `ls -l | grep $timestamp | awk '{print $5}'`))
 echo "Size of $myname-httpd-logs-$timestamp.tar is $Size" >> ~/Automation_Project/$myname-automation-script-logs-$timestamp.log
 
 ###Moving tar file to s3 bucket##### 
@@ -82,7 +82,7 @@ echo "Log tar moved to $s3_bucket on $timestamp"  >>  ~/Automation_Project/$myna
 
 ########adding entry in inventory.html for log tars############
 
-echo "$LogType &emsp; &emsp; $timestamp &emsp; &emsp; $Type &emsp; &emsp; $Size" >> /var/www/html/inventory.html
+echo "$LogType &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; $timestamp &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; $Type &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; $Size bytes" >> /var/www/html/inventory.html
 
 #######ensuring cron job is present and create one if not exists###########
 
