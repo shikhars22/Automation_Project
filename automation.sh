@@ -69,7 +69,7 @@ tar -tvf shikhar-httpd-logs-$timestamp.tar
 mv $myname-httpd-logs-$timestamp.tar /tmp/$myname-httpd-logs-$timestamp.tar
 cd /tmp/
 ls -lah | grep $myname
-Size=$(( `ls -l | grep $timestamp | awk '{print (( $5/1024 ))"K"}'
+Size=$(( `ls -l | grep $timestamp | awk '{print (( $5/1024 ))"K"}'`))
 echo "Size of $myname-httpd-logs-$timestamp.tar is $Size" >> ~/Automation_Project/$myname-automation-script-logs-$timestamp.log
 
 ###Moving tar file to s3 bucket##### 
