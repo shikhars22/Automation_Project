@@ -10,6 +10,9 @@
 timestamp=$(date '+%d%m%Y-%H%M%S')
 myname="shikhar"
 s3_bucket="upgrad-shikhar"
+LogType="httpd-logs"
+Type="tar"
+
 
 echo "-------------automation.sh--started running on $timestamp------------" >  ~/Automation_Project/$myname-automation-script-logs-$timestamp.log
 
@@ -66,6 +69,8 @@ tar -tvf shikhar-httpd-logs-$timestamp.tar
 mv $myname-httpd-logs-$timestamp.tar /tmp/$myname-httpd-logs-$timestamp.tar
 cd /tmp/
 ls -lah | grep $myname
+Size=$(( `ls -l | grep $timestamp | awk '{print (( $5/1024 ))"K"}'
+echo "Size of $myname-httpd-logs-$timestamp.tar is $Size" >> ~/Automation_Project/$myname-automation-script-logs-$timestamp.log
 
 ###Moving tar file to s3 bucket##### 
 aws s3 \
@@ -74,6 +79,12 @@ s3://$s3_bucket/$myname-httpd-logs-$timestamp.tar
 
 #cd ~/Automation_Project/
 echo "Log tar moved to $s3_bucket on $timestamp"  >>  ~/Automation_Project/$myname-automation-script-logs-$timestamp.log
+
+########adding entry in inventory.html for log tars############
+
+echo "$LogType &emsp; &emsp; $timestamp &emsp; &emsp; $Type &emsp; &emsp; $Size" >> /var/www/html/inventory.html
+
+#######ensuring cron job is present and create one if not exists###########
 
 isCronPresent=$(( `cat /etc/cron.d/automation | wc -l` ))
 if [ $isCronPresent == 0 ]
