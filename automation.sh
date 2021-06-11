@@ -82,7 +82,7 @@ echo "Log tar moved to $s3_bucket on $timestamp"  >>  ~/Automation_Project/$myna
 
 ########adding entry in inventory.html for log tars############
 
-echo "$LogType &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; $timestamp &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; $Type &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; $Size bytes" >> /var/www/html/inventory.html
+echo "<br>$LogType &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; $timestamp &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; $Type &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; $Size bytes <br>" >> /var/www/html/inventory.html
 
 #######ensuring cron job is present and create one if not exists###########
 
